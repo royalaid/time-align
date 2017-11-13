@@ -2,12 +2,14 @@
   (:require [figwheel-sidecar.repl-api :as ra]))
 
 (defn start-fw []
-  (ra/start-autobuild :worker)
-  (ra/start-figwheel!))
+  (ra/start-figwheel!)
+  (ra/start-autobuild :worker))
 
 (defn stop-fw []
   (ra/stop-figwheel!))
 
 (defn cljs []
-  (ra/cljs-repl))
+  (when-not (ra/figwheel-running?)
+    (start-fw))
+  (ra/cljs-repl "app"))
 
